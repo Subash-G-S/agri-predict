@@ -11,7 +11,7 @@
 
 | Contributor | Email | Primary Responsibilities (Review 1) |
 |---|---|---|
-| **Subash Gopi** | `subashgopi2006@gmail.com` | Regression dataset audit & EDA foundation, feature relationship investigation, Linear, Ridge, Lasso, ElasticNet, and Polynomial Regression. |
+| **Subash Chandra Bose G S** | `subashgopi2006@gmail.com` | Regression dataset audit & EDA foundation, feature relationship investigation, Linear, Ridge, Lasso, ElasticNet, and Polynomial Regression. |
 | **Somesh K. Bharathwaj** | `somesh.k.bharathwaj@gmail.com` | Regression non-linear models (Decision Tree, Random Forest, Gradient Boosting, SVR, KNN), hyperparameter tuning, 5-fold CV, error diagnostics. |
 | **Akhil Senthil** | `akhilsenthil696@gmail.com` | Classification dataset audit, multi-class EDA, preprocessing & stratified splitting, Part-A classifiers (Logistic, KNN, Naive Bayes, Decision Tree, SVC), confusion matrix analysis, 5-fold CV, documentation. |
 

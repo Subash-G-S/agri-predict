@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agri-Predict — Precision agriculture analytics platform combining crop yield prediction, crop recommendation, and field zone clustering.">
+  <title>Agri-Predict — Agricultural Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <div class="wordmark">
+      <span class="wordmark-primary">Agri</span><span class="wordmark-accent">Predict</span>
+      <span class="wordmark-tag">ML Capstone · 23CSE301</span>
+    </div>
+    <nav class="site-nav" role="navigation" aria-label="Analysis modes">
+      <button class="nav-btn active" data-mode="regression" id="nav-regression">Yield Prediction</button>
+      <button class="nav-btn" data-mode="classification" id="nav-classification">Crop Recommendation</button>
+      <button class="nav-btn" data-mode="clustering" id="nav-clustering">Field Zone</button>
+      <button class="nav-btn" data-mode="complete" id="nav-complete">Full Analysis</button>
+    </nav>
+    <div class="header-status" id="health-indicator" aria-live="polite">
+      <span class="status-dot" id="status-dot"></span>
+      <span class="status-label" id="status-label">Checking...</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── MAIN ── -->
+<main class="site-main" id="main-content" role="main">
+
+  <!-- Hero bar -->
+  <div class="hero-bar">
+    <div class="hero-inner">
+      <h1 class="hero-headline" id="page-headline">Crop Yield Prediction</h1>
+      <p class="hero-sub" id="page-sub">
+        Estimate maize yield from field area, climate, and crop inputs using a Gradient Boosting regression model trained on 19,689 Indian agricultural records.
+      </p>
+    </div>
+    <div class="model-badge" id="model-badge">
+      <span class="badge-label">Model</span>
+      <span class="badge-value" id="badge-value">Gradient Boosting · R² 0.9709</span>
+    </div>
+  </div>
+
+  <!-- ── REGRESSION PANEL ── -->
+  <section class="analysis-panel active" id="panel-regression" aria-labelledby="nav-regression">
+    <form class="analysis-form" id="form-regression" novalidate>
+
+      <div class="form-group-header">
+        <h2 class="group-title">Crop & Location</h2>
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="reg-crop">Crop type</label>
+          <select class="field-input" id="reg-crop" name="Crop" required>
+            <option value="">Select crop…</option>
+            <option>Arecanut</option><option>Arhar/Tur</option><option>Bajra</option>
+            <option>Banana</option><option>Barley</option><option>Black pepper</option>
+            <option>Cardamom</option><option>Cashewnuts</option><option>Castor seed</option>
+            <option>Coconut</option><option>Coriander</option><option>Cotton(lint)</option>
+            <option>Dry chillies</option><option>Ginger</option><option>Gram</option>
+            <option>Groundnut</option><option>Guar seed</option><option>Horse-gram</option>
+            <option>Jowar</option><option>Jute</option><option>Khesari</option>
+            <option>Linseed</option><option>Maize</option><option>Masoor</option>
+            <option>Mesta</option><option>Moong(Green Gram)</option><option>Moth</option>
+            <option>Niger seed</option><option>Oilseeds total</option><option>Onion</option>
+            <option>Other Rabi pulses</option><option>Peas &amp; beans (Pulses)</option>
+            <option>Potato</option><option>Ragi</option><option>Rapeseed &amp;Mustard</option>
+            <option>Rice</option><option>Safflower</option><option>Sannhamp</option>
+            <option>Sesamum</option><option>Small millets</option><option>Soyabean</option>
+            <option>Sugarcane</option><option>Sunflower</option><option>Sweet potato</option>
+            <option>Tapioca</option><option>Tobacco</option><option>Turmeric</option>
+            <option>Urad</option><option>Wheat</option><option>other oilseeds</option>
+          </select>
+          <span class="field-error" id="err-reg-crop"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="reg-season">Season</label>
+          <select class="field-input" id="reg-season" name="Season" required>
+            <option value="">Select season…</option>
+            <option>Kharif</option><option>Rabi</option><option>Whole Year</option>
+            <option>Summer</option><option>Winter</option><option>Autumn</option>
+          </select>
+          <span class="field-error" id="err-reg-season"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="reg-state">State</label>
+          <select class="field-input" id="reg-state" name="State" required>
+            <option value="">Select state…</option>
+            <option>Andhra Pradesh</option><option>Arunachal Pradesh</option>
+            <option>Assam</option><option>Bihar</option><option>Chhattisgarh</option>
+            <option>Goa</option><option>Gujarat</option><option>Haryana</option>
+            <option>Himachal Pradesh</option><option>Jammu and Kashmir</option>
+            <option>Jharkhand</option><option>Karnataka</option><option>Kerala</option>
+            <option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option>
+            <option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option>
+            <option>Odisha</option><option>Punjab</option><option>Rajasthan</option>
+            <option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option>
+            <option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
+            <option>West Bengal</option>
+          </select>
+          <span class="field-error" id="err-reg-state"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="reg-crop-year">Crop year</label>
+          <input class="field-input" type="number" id="reg-crop-year" name="Crop_Year"
+                 min="1990" max="2030" placeholder="e.g. 2023" required>
+          <span class="field-error" id="err-reg-crop-year"></span>
+        </div>
+      </div>
+
+      <div class="form-group-header">
+        <h2 class="group-title">Field &amp; Climate</h2>
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="reg-area">Cultivated area (ha)</label>
+          <input class="field-input" type="number" id="reg-area" name="Area"
+                 min="0.1" step="0.1" placeholder="e.g. 125.5" required>
+          <span class="field-error" id="err-reg-area"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="reg-rainfall">Annual rainfall (mm)</label>
+          <input class="field-input" type="number" id="reg-rainfall" name="Annual_Rainfall"
+                 min="0" step="0.1" placeholder="e.g. 850" required>
+          <span class="field-error" id="err-reg-rainfall"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="reg-fertilizer">Fertilizer (kg)</label>
+          <input class="field-input" type="number" id="reg-fertilizer" name="Fertilizer"
+                 min="0" step="0.1" placeholder="e.g. 14500" required>
+          <span class="field-error" id="err-reg-fertilizer"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="reg-pesticide">Pesticide (kg)</label>
+          <input class="field-input" type="number" id="reg-pesticide" name="Pesticide"
+                 min="0" step="0.1" placeholder="e.g. 230" required>
+          <span class="field-error" id="err-reg-pesticide"></span>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="reg-avg-temp">Avg temperature (°C)</label>
+          <input class="field-input" type="number" id="reg-avg-temp" name="Avg_Temperature"
+                 step="0.1" placeholder="e.g. 26.3" required>
+          <span class="field-error" id="err-reg-avg-temp"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="reg-max-temp">Max temperature (°C)</label>
+          <input class="field-input" type="number" id="reg-max-temp" name="Max_Temperature"
+                 step="0.1" placeholder="e.g. 34.1" required>
+          <span class="field-error" id="err-reg-max-temp"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="reg-min-temp">Min temperature (°C)</label>
+          <input class="field-input" type="number" id="reg-min-temp" name="Min_Temperature"
+                 step="0.1" placeholder="e.g. 19.2" required>
+          <span class="field-error" id="err-reg-min-temp"></span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" id="btn-reg-submit">Predict Yield</button>
+        <button type="button" class="btn-secondary" id="btn-reg-reset">Reset</button>
+      </div>
+      <div class="form-notice">
+        <strong>Note:</strong> Production is excluded as a predictor to avoid circular data leakage (Production = Yield × Area). This model predicts yield per unit area, not total harvested production.
+      </div>
+    </form>
+
+    <!-- Result -->
+    <div class="result-panel hidden" id="result-regression" aria-live="polite">
+      <div class="result-header">
+        <h2 class="result-title">Yield Prediction Result</h2>
+        <span class="result-model-tag" id="reg-model-tag"></span>
+      </div>
+      <div class="result-primary">
+        <div class="result-metric">
+          <span class="metric-label">Predicted Yield</span>
+          <span class="metric-value" id="reg-yield-value">—</span>
+          <span class="metric-unit">kg per unit area</span>
+        </div>
+        <div class="result-metrics-row">
+          <div class="result-metric-small">
+            <span class="metric-small-label">Model R²</span>
+            <span class="metric-small-value" id="reg-r2-value">—</span>
+          </div>
+          <div class="result-metric-small">
+            <span class="metric-small-label">RMSE</span>
+            <span class="metric-small-value" id="reg-rmse-value">—</span>
+          </div>
+        </div>
+      </div>
+      <p class="result-note" id="reg-result-note"></p>
+    </div>
+    <div class="loading-panel hidden" id="loading-regression">
+      <div class="spinner"></div>
+      <span class="loading-text">Running Gradient Boosting inference...</span>
+    </div>
+    <div class="error-panel hidden" id="error-regression" role="alert">
+      <h3 class="error-title">Prediction Error</h3>
+      <p class="error-message" id="error-regression-msg"></p>
+    </div>
+  </section>
+
+  <!-- ── CLASSIFICATION PANEL ── -->
+  <section class="analysis-panel hidden" id="panel-classification" aria-labelledby="nav-classification">
+    <form class="analysis-form" id="form-classification" novalidate>
+      <div class="form-group-header">
+        <h2 class="group-title">Soil Nutrients</h2>
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="cls-N">Nitrogen — N (mg/kg)</label>
+          <input class="field-input" type="number" id="cls-N" name="N"
+                 min="0" max="300" step="0.1" placeholder="e.g. 90" required>
+          <span class="field-error" id="err-cls-N"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="cls-P">Phosphorus — P (mg/kg)</label>
+          <input class="field-input" type="number" id="cls-P" name="P"
+                 min="0" max="300" step="0.1" placeholder="e.g. 42" required>
+          <span class="field-error" id="err-cls-P"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="cls-K">Potassium — K (mg/kg)</label>
+          <input class="field-input" type="number" id="cls-K" name="K"
+                 min="0" max="300" step="0.1" placeholder="e.g. 43" required>
+          <span class="field-error" id="err-cls-K"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="cls-ph">Soil pH</label>
+          <input class="field-input" type="number" id="cls-ph" name="ph"
+                 min="0" max="14" step="0.01" placeholder="e.g. 6.5" required>
+          <span class="field-error" id="err-cls-ph"></span>
+        </div>
+      </div>
+      <div class="form-group-header">
+        <h2 class="group-title">Climate Conditions</h2>
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="cls-temperature">Temperature (°C)</label>
+          <input class="field-input" type="number" id="cls-temperature" name="temperature"
+                 step="0.1" placeholder="e.g. 23.8" required>
+          <span class="field-error" id="err-cls-temperature"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="cls-humidity">Humidity (%)</label>
+          <input class="field-input" type="number" id="cls-humidity" name="humidity"
+                 min="0" max="100" step="0.1" placeholder="e.g. 82" required>
+          <span class="field-error" id="err-cls-humidity"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="cls-rainfall">Rainfall (mm)</label>
+          <input class="field-input" type="number" id="cls-rainfall" name="rainfall"
+                 min="0" step="0.1" placeholder="e.g. 202" required>
+          <span class="field-error" id="err-cls-rainfall"></span>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" id="btn-cls-submit">Recommend Crop</button>
+        <button type="button" class="btn-secondary" id="btn-cls-reset">Reset</button>
+      </div>
+    </form>
+
+    <div class="result-panel hidden" id="result-classification" aria-live="polite">
+      <div class="result-header">
+        <h2 class="result-title">Crop Recommendation</h2>
+        <span class="result-model-tag" id="cls-model-tag"></span>
+      </div>
+      <div class="result-primary">
+        <div class="result-metric">
+          <span class="metric-label">Recommended Crop</span>
+          <span class="metric-value metric-crop" id="cls-crop-value">—</span>
+        </div>
+      </div>
+      <div class="top3-section">
+        <h3 class="top3-title">Top 3 Candidates</h3>
+        <div class="top3-list" id="cls-top3-list"></div>
+      </div>
+      <p class="result-note">Based on 2,200 labelled soil and climate observations across 22 crop classes. Model accuracy: <span id="cls-accuracy">—</span>.</p>
+    </div>
+    <div class="loading-panel hidden" id="loading-classification">
+      <div class="spinner"></div>
+      <span class="loading-text">Running Random Forest inference...</span>
+    </div>
+    <div class="error-panel hidden" id="error-classification" role="alert">
+      <h3 class="error-title">Prediction Error</h3>
+      <p class="error-message" id="error-classification-msg"></p>
+    </div>
+  </section>
+
+  <!-- ── CLUSTERING PANEL ── -->
+  <section class="analysis-panel hidden" id="panel-clustering" aria-labelledby="nav-clustering">
+    <form class="analysis-form" id="form-clustering" novalidate>
+      <div class="form-group-header">
+        <h2 class="group-title">Maize Field Properties</h2>
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="clu-soil-ph">Soil pH</label>
+          <input class="field-input" type="number" id="clu-soil-ph" name="soil_ph"
+                 min="3" max="10" step="0.01" placeholder="e.g. 6.5" required>
+          <span class="field-error" id="err-clu-soil-ph"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="clu-organic">Organic matter (%)</label>
+          <input class="field-input" type="number" id="clu-organic" name="organic_matter"
+                 min="0" max="20" step="0.01" placeholder="e.g. 2.8" required>
+          <span class="field-error" id="err-clu-organic"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="clu-sand">Sand content (%)</label>
+          <input class="field-input" type="number" id="clu-sand" name="sand_pct"
+                 min="0" max="100" step="0.1" placeholder="e.g. 42.0" required>
+          <span class="field-error" id="err-clu-sand"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="clu-ndvi">NDVI (0–1)</label>
+          <input class="field-input" type="number" id="clu-ndvi" name="ndvi"
+                 min="0" max="1" step="0.001" placeholder="e.g. 0.62" required>
+          <span class="field-error" id="err-clu-ndvi"></span>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label" for="clu-temperature">Temperature (°C)</label>
+          <input class="field-input" type="number" id="clu-temperature" name="temperature"
+                 step="0.1" placeholder="e.g. 26.5" required>
+          <span class="field-error" id="err-clu-temperature"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="clu-humidity">Humidity (%)</label>
+          <input class="field-input" type="number" id="clu-humidity" name="humidity"
+                 min="0" max="100" step="0.1" placeholder="e.g. 72" required>
+          <span class="field-error" id="err-clu-humidity"></span>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="clu-rainfall">Rainfall (mm)</label>
+          <input class="field-input" type="number" id="clu-rainfall" name="rainfall"
+                 min="0" step="0.1" placeholder="e.g. 130" required>
+          <span class="field-error" id="err-clu-rainfall"></span>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" id="btn-clu-submit">Assign Field Zone</button>
+        <button type="button" class="btn-secondary" id="btn-clu-reset">Reset</button>
+      </div>
+      <div class="form-notice">
+        <strong>Note:</strong> Zone assignment uses K-Means clustering (k=4) trained on 10,000 maize-field records. Agglomerative Hierarchical Clustering is used for exploratory analysis only; it does not support new-field assignment. This is an environmental zone grouping, not a yield prediction.
+      </div>
+    </form>
+
+    <div class="result-panel hidden" id="result-clustering" aria-live="polite">
+      <div class="result-header">
+        <h2 class="result-title">Field Zone Assignment</h2>
+        <span class="result-model-tag">K-Means · k=4</span>
+      </div>
+      <div class="result-primary">
+        <div class="result-metric">
+          <span class="metric-label">Assigned Zone</span>
+          <span class="metric-value" id="clu-zone-value">—</span>
+        </div>
+        <div class="result-metrics-row">
+          <div class="result-metric-small">
+            <span class="metric-small-label">Zone Mean Yield</span>
+            <span class="metric-small-value" id="clu-yield-value">—</span>
+          </div>
+          <div class="result-metric-small">
+            <span class="metric-small-label">Zone Size</span>
+            <span class="metric-small-value" id="clu-size-value">—</span>
+          </div>
+        </div>
+      </div>
+      <p class="result-note" id="clu-exploratory-note"></p>
+    </div>
+    <div class="loading-panel hidden" id="loading-clustering">
+      <div class="spinner"></div>
+      <span class="loading-text">Running K-Means assignment...</span>
+    </div>
+    <div class="error-panel hidden" id="error-clustering" role="alert">
+      <h3 class="error-title">Assignment Error</h3>
+      <p class="error-message" id="error-clustering-msg"></p>
+    </div>
+  </section>
+
+  <!-- ── COMPLETE ANALYSIS PANEL ── -->
+  <section class="analysis-panel hidden" id="panel-complete" aria-labelledby="nav-complete">
+    <div class="complete-intro">
+      <p>Run all three analyses simultaneously. Regression, crop recommendation, and field zone assignment use different feature schemas — fill each section independently.</p>
+    </div>
+
+    <form class="analysis-form" id="form-complete" novalidate>
+
+      <!-- Regression sub-form -->
+      <details class="sub-form-section" open>
+        <summary class="sub-form-title">Yield Prediction Inputs</summary>
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="cp-crop">Crop</label>
+            <select class="field-input" id="cp-crop" name="Crop">
+              <option value="">Select…</option>
+              <option>Rice</option><option>Wheat</option><option>Maize</option>
+              <option>Cotton(lint)</option><option>Sugarcane</option><option>Potato</option>
+              <option>Groundnut</option><option>Soyabean</option><option>Bajra</option>
+              <option>Jowar</option><option>Other (enter manually)</option>
+            </select>
+            <span class="field-error" id="err-cp-crop"></span>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-season">Season</label>
+            <select class="field-input" id="cp-season" name="Season">
+              <option value="">Select…</option>
+              <option>Kharif</option><option>Rabi</option><option>Whole Year</option>
+              <option>Summer</option><option>Winter</option>
+            </select>
+            <span class="field-error" id="err-cp-season"></span>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-state">State</label>
+            <select class="field-input" id="cp-state" name="State">
+              <option value="">Select…</option>
+              <option>Andhra Pradesh</option><option>Bihar</option>
+              <option>Gujarat</option><option>Haryana</option><option>Karnataka</option>
+              <option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option>
+              <option>Punjab</option><option>Rajasthan</option><option>Tamil Nadu</option>
+              <option>Telangana</option><option>Uttar Pradesh</option><option>West Bengal</option>
+            </select>
+            <span class="field-error" id="err-cp-state"></span>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-year">Year</label>
+            <input class="field-input" type="number" id="cp-year" name="Crop_Year"
+                   min="1990" max="2030" placeholder="e.g. 2023">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="cp-area">Area (ha)</label>
+            <input class="field-input" type="number" id="cp-area" name="Area" min="0.1" step="0.1" placeholder="e.g. 100">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-annual-rain">Annual rainfall (mm)</label>
+            <input class="field-input" type="number" id="cp-annual-rain" name="Annual_Rainfall" min="0" step="0.1" placeholder="e.g. 850">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-fert">Fertilizer (kg)</label>
+            <input class="field-input" type="number" id="cp-fert" name="Fertilizer" min="0" step="0.1" placeholder="e.g. 12000">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-pest">Pesticide (kg)</label>
+            <input class="field-input" type="number" id="cp-pest" name="Pesticide" min="0" step="0.1" placeholder="e.g. 200">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="cp-avg-t">Avg temp (°C)</label>
+            <input class="field-input" type="number" id="cp-avg-t" name="Avg_Temperature" step="0.1" placeholder="e.g. 26">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-max-t">Max temp (°C)</label>
+            <input class="field-input" type="number" id="cp-max-t" name="Max_Temperature" step="0.1" placeholder="e.g. 34">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-min-t">Min temp (°C)</label>
+            <input class="field-input" type="number" id="cp-min-t" name="Min_Temperature" step="0.1" placeholder="e.g. 19">
+          </div>
+        </div>
+      </details>
+
+      <!-- Classification sub-form -->
+      <details class="sub-form-section">
+        <summary class="sub-form-title">Crop Recommendation Inputs</summary>
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="cp-N">N (mg/kg)</label>
+            <input class="field-input" type="number" id="cp-N" name="N" min="0" max="300" step="0.1" placeholder="e.g. 90">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-P">P (mg/kg)</label>
+            <input class="field-input" type="number" id="cp-P" name="P" min="0" max="300" step="0.1" placeholder="e.g. 42">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-K">K (mg/kg)</label>
+            <input class="field-input" type="number" id="cp-K" name="K" min="0" max="300" step="0.1" placeholder="e.g. 43">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-ph">Soil pH</label>
+            <input class="field-input" type="number" id="cp-ph" name="ph" min="0" max="14" step="0.01" placeholder="e.g. 6.5">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-temp">Temperature (°C)</label>
+            <input class="field-input" type="number" id="cp-temp" name="cls_temperature" step="0.1" placeholder="e.g. 23">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-hum">Humidity (%)</label>
+            <input class="field-input" type="number" id="cp-hum" name="cls_humidity" min="0" max="100" step="0.1" placeholder="e.g. 80">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-rain-cls">Rainfall (mm)</label>
+            <input class="field-input" type="number" id="cp-rain-cls" name="cls_rainfall" min="0" step="0.1" placeholder="e.g. 200">
+          </div>
+        </div>
+      </details>
+
+      <!-- Clustering sub-form -->
+      <details class="sub-form-section">
+        <summary class="sub-form-title">Field Zone Inputs</summary>
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="cp-soil-ph">Soil pH</label>
+            <input class="field-input" type="number" id="cp-soil-ph" name="clu_soil_ph" min="3" max="10" step="0.01" placeholder="e.g. 6.5">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-org">Organic matter (%)</label>
+            <input class="field-input" type="number" id="cp-org" name="clu_organic_matter" min="0" max="20" step="0.01" placeholder="e.g. 2.8">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-sand">Sand (%)</label>
+            <input class="field-input" type="number" id="cp-sand" name="clu_sand_pct" min="0" max="100" step="0.1" placeholder="e.g. 42">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-ndvi">NDVI</label>
+            <input class="field-input" type="number" id="cp-ndvi" name="clu_ndvi" min="0" max="1" step="0.001" placeholder="e.g. 0.62">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-clu-temp">Temperature (°C)</label>
+            <input class="field-input" type="number" id="cp-clu-temp" name="clu_temperature" step="0.1" placeholder="e.g. 26">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-clu-hum">Humidity (%)</label>
+            <input class="field-input" type="number" id="cp-clu-hum" name="clu_humidity" min="0" max="100" step="0.1" placeholder="e.g. 72">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cp-clu-rain">Rainfall (mm)</label>
+            <input class="field-input" type="number" id="cp-clu-rain" name="clu_rainfall" min="0" step="0.1" placeholder="e.g. 130">
+          </div>
+        </div>
+      </details>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" id="btn-cp-submit">Run Full Analysis</button>
+        <button type="button" class="btn-secondary" id="btn-cp-reset">Reset All</button>
+      </div>
+    </form>
+
+    <!-- Complete results -->
+    <div class="complete-results hidden" id="complete-results" aria-live="polite">
+      <div class="complete-result-card" id="cp-reg-card">
+        <div class="result-card-header">
+          <h3 class="result-card-title">Yield Prediction</h3>
+          <span class="result-card-status" id="cp-reg-status"></span>
+        </div>
+        <div class="result-card-body" id="cp-reg-body"></div>
+      </div>
+      <div class="complete-result-card" id="cp-cls-card">
+        <div class="result-card-header">
+          <h3 class="result-card-title">Crop Recommendation</h3>
+          <span class="result-card-status" id="cp-cls-status"></span>
+        </div>
+        <div class="result-card-body" id="cp-cls-body"></div>
+      </div>
+      <div class="complete-result-card" id="cp-clu-card">
+        <div class="result-card-header">
+          <h3 class="result-card-title">Field Zone Assignment</h3>
+          <span class="result-card-status" id="cp-clu-status"></span>
+        </div>
+        <div class="result-card-body" id="cp-clu-body"></div>
+      </div>
+    </div>
+    <div class="loading-panel hidden" id="loading-complete">
+      <div class="spinner"></div>
+      <span class="loading-text">Running all three models...</span>
+    </div>
+    <div class="error-panel hidden" id="error-complete" role="alert">
+      <h3 class="error-title">Analysis Error</h3>
+      <p class="error-message" id="error-complete-msg"></p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="footer-brand">AgriPredict</span>
+      <span class="footer-course">23CSE301 Machine Learning Capstone · B.Tech CSE III · AY 2026–27</span>
+    </div>
+    <div class="footer-team">
+      <span>Subash Chandra Bose G S</span>
+      <span>Somesh K. Bharathwaj</span>
+      <span>Akhil Senthil</span>
+    </div>
+    <div class="footer-right">
+      <a href="https://github.com/Subash-G-S/agri-predict" class="footer-link" target="_blank" rel="noopener">GitHub Repository</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script src="js/validation.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

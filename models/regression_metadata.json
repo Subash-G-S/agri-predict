@@ -1,0 +1,57 @@
+{
+  "model_type": "GradientBoostingRegressor",
+  "algorithm": "Gradient Boosting Regressor (Tuned)",
+  "target": "Yield (kg per unit area)",
+  "features": [
+    "Crop",
+    "Season",
+    "State",
+    "Crop_Year",
+    "Area",
+    "Annual_Rainfall",
+    "Fertilizer",
+    "Pesticide",
+    "Avg_Temperature",
+    "Max_Temperature",
+    "Min_Temperature",
+    "Temperature_Range"
+  ],
+  "categorical_features": [
+    "Crop",
+    "Season",
+    "State"
+  ],
+  "numerical_features": [
+    "Crop_Year",
+    "Area",
+    "Annual_Rainfall",
+    "Fertilizer",
+    "Pesticide",
+    "Avg_Temperature",
+    "Max_Temperature",
+    "Min_Temperature",
+    "Temperature_Range"
+  ],
+  "engineered_features": [
+    "Temperature_Range = Max_Temperature - Min_Temperature"
+  ],
+  "excluded_features": [
+    "Production (circular leakage \u2014 post-harvest quantity)"
+  ],
+  "preprocessing": "ColumnTransformer: StandardScaler (numerical) + OneHotEncoder (categorical)",
+  "hyperparameters": {
+    "n_estimators": 150,
+    "learning_rate": 0.15,
+    "max_depth": 3
+  },
+  "train_size": 15751,
+  "test_size": 3938,
+  "metrics": {
+    "r2": 0.9709,
+    "rmse": 152.7,
+    "mae": 12.62
+  },
+  "random_state": 42,
+  "dataset": "data/Crop Yeild Data.csv",
+  "dataset_rows": 19689
+}

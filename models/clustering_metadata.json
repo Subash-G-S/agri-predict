@@ -1,0 +1,179 @@
+{
+  "algorithm": "KMeans",
+  "n_clusters": 4,
+  "linkage": "ward",
+  "features": [
+    "soil_ph",
+    "organic_matter",
+    "sand_pct",
+    "temperature",
+    "humidity",
+    "rainfall",
+    "ndvi"
+  ],
+  "excluded_from_clustering": [
+    "field_id",
+    "yield"
+  ],
+  "scaler": "StandardScaler",
+  "random_state": 42,
+  "training_rows": 10000,
+  "metrics": {
+    "kmeans": {
+      "silhouette": 0.09938679262566348,
+      "davies_bouldin": 2.3262700145112847,
+      "calinski_harabasz": 981.9738462586074
+    },
+    "agglomerative": {
+      "silhouette": 0.038277425532828084,
+      "davies_bouldin": 3.0910906855414577,
+      "calinski_harabasz": 556.7765178562316
+    }
+  },
+  "cluster_profiles": {
+    "0": {
+      "soil_ph": {
+        "mean": 6.511,
+        "std": 0.579
+      },
+      "organic_matter": {
+        "mean": 3.401,
+        "std": 0.392
+      },
+      "sand_pct": {
+        "mean": 38.416,
+        "std": 5.443
+      },
+      "temperature": {
+        "mean": 26.995,
+        "std": 1.71
+      },
+      "humidity": {
+        "mean": 74.57,
+        "std": 5.756
+      },
+      "rainfall": {
+        "mean": 138.112,
+        "std": 22.966
+      },
+      "ndvi": {
+        "mean": 0.612,
+        "std": 0.085
+      },
+      "yield": {
+        "mean": 4258.363,
+        "std": 434.855
+      }
+    },
+    "1": {
+      "soil_ph": {
+        "mean": 6.501,
+        "std": 0.582
+      },
+      "organic_matter": {
+        "mean": 2.489,
+        "std": 0.615
+      },
+      "sand_pct": {
+        "mean": 52.088,
+        "std": 5.071
+      },
+      "temperature": {
+        "mean": 26.913,
+        "std": 1.735
+      },
+      "humidity": {
+        "mean": 74.705,
+        "std": 5.793
+      },
+      "rainfall": {
+        "mean": 137.041,
+        "std": 22.928
+      },
+      "ndvi": {
+        "mean": 0.664,
+        "std": 0.056
+      },
+      "yield": {
+        "mean": 4246.81,
+        "std": 437.352
+      }
+    },
+    "2": {
+      "soil_ph": {
+        "mean": 6.543,
+        "std": 0.574
+      },
+      "organic_matter": {
+        "mean": 2.1,
+        "std": 0.394
+      },
+      "sand_pct": {
+        "mean": 37.945,
+        "std": 5.133
+      },
+      "temperature": {
+        "mean": 26.879,
+        "std": 1.749
+      },
+      "humidity": {
+        "mean": 74.746,
+        "std": 5.719
+      },
+      "rainfall": {
+        "mean": 139.916,
+        "std": 23.086
+      },
+      "ndvi": {
+        "mean": 0.544,
+        "std": 0.089
+      },
+      "yield": {
+        "mean": 4249.269,
+        "std": 442.369
+      }
+    },
+    "3": {
+      "soil_ph": {
+        "mean": 6.478,
+        "std": 0.584
+      },
+      "organic_matter": {
+        "mean": 2.985,
+        "std": 0.634
+      },
+      "sand_pct": {
+        "mean": 51.657,
+        "std": 5.497
+      },
+      "temperature": {
+        "mean": 27.185,
+        "std": 1.738
+      },
+      "humidity": {
+        "mean": 74.081,
+        "std": 5.812
+      },
+      "rainfall": {
+        "mean": 144.953,
+        "std": 22.334
+      },
+      "ndvi": {
+        "mean": 0.482,
+        "std": 0.055
+      },
+      "yield": {
+        "mean": 4253.204,
+        "std": 431.741
+      }
+    }
+  },
+  "cluster_sizes": {
+    "0": 2539,
+    "1": 2424,
+    "2": 2510,
+    "3": 2527
+  },
+  "agglomerative_predict_supported": false,
+  "note": "AgglomerativeClustering does not support .predict() for new observations. Use K-Means for new field assignment."
+}

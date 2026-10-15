@@ -1,0 +1,64 @@
+{
+  "model_type": "RandomForestClassifier",
+  "algorithm": "Random Forest Classifier (Tuned, k=4 CV selected)",
+  "target": "Crop label (22 classes)",
+  "features": [
+    "N",
+    "P",
+    "K",
+    "temperature",
+    "humidity",
+    "ph",
+    "rainfall"
+  ],
+  "feature_units": {
+    "N": "mg/kg",
+    "P": "mg/kg",
+    "K": "mg/kg",
+    "temperature": "Celsius",
+    "humidity": "percent",
+    "ph": "pH scale (0-14)",
+    "rainfall": "mm"
+  },
+  "preprocessing": "StandardScaler on all 7 features",
+  "classes": [
+    "apple",
+    "banana",
+    "blackgram",
+    "chickpea",
+    "coconut",
+    "coffee",
+    "cotton",
+    "grapes",
+    "jute",
+    "kidneybeans",
+    "lentil",
+    "maize",
+    "mango",
+    "mothbeans",
+    "mungbean",
+    "muskmelon",
+    "orange",
+    "papaya",
+    "pigeonpeas",
+    "pomegranate",
+    "rice",
+    "watermelon"
+  ],
+  "n_classes": 22,
+  "hyperparameters": {
+    "n_estimators": 100,
+    "max_depth": 12,
+    "min_samples_leaf": 1
+  },
+  "train_size": 1760,
+  "test_size": 440,
+  "metrics": {
+    "accuracy": 0.9955,
+    "weighted_f1": 0.9955
+  },
+  "probability_support": true,
+  "random_state": 42,
+  "dataset": "data/Crop_recommendation.csv",
+  "dataset_rows": 2200
+}

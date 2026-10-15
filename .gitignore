@@ -1,0 +1,40 @@
+# ─── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+.venv/
+venv/
+env/
+.env
+
+# ─── Jupyter ─────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+
+# ─── Build scripts (generated, not part of project source) ───────────────────
+build_clustering_notebook.py
+export_models.py
+
+# ─── pytest ──────────────────────────────────────────────────────────────────
+.pytest_cache/
+pytest_cache/
+
+# ─── OS ──────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── IDE ─────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ─── Large model artifacts (tracked by Git LFS or excluded) ──────────────────
+# Uncomment to exclude model binaries from version control:
+# models/*.joblib

@@ -11,7 +11,7 @@
 
 | Contributor | Email | Primary Responsibilities (Review 1 & Review 2) |
 |---|---|---|
-| **Subash Gopi** | `subashgobi2006@gmail.com` | **Review 1:** Regression dataset audit & EDA foundation, Linear/Ridge/Lasso/ElasticNet/Poly. <br>**Review 2:** AdaBoost classifier implementation & depth tuning, Multi-Layer Perceptron (MLP) neural network pipeline with scaling, documentation & integration. |
+| **Subash Chandra Bose G S** | `subashgobi2006@gmail.com` | **Review 1:** Regression dataset audit & EDA foundation, Linear/Ridge/Lasso/ElasticNet/Poly. <br>**Review 2:** AdaBoost classifier implementation & depth tuning, Multi-Layer Perceptron (MLP) neural network pipeline with scaling, documentation & integration. |
 | **Somesh K. Bharathwaj** | `somesh.k.bharathwaj@gmail.com` | **Review 1:** Regression non-linear models (Decision Tree, RF, GB, SVR, KNN), tuning, 5-fold CV. <br>**Review 2:** Gradient Boosting classifier implementation, Review 1 baseline freeze & integrity checks, consolidated 10-classifier comparative benchmark. |
 | **Akhil Senthil** | `akhilsenthil696@gmail.com` | **Review 1:** Classification dataset audit, multi-class EDA, Part A classifiers (Logistic, KNN, GNB, DT, SVC). <br>**Review 2:** Random Forest classifier & feature importance, Decision Tree Bagging ensemble, 5-fold cross-validated hyperparameter tuning on champion model. |
 

@@ -3,7 +3,7 @@
 **Course:** 23CSE301 Machine Learning  
 **Academic Year:** 2026-27  
 **Degree:** B.Tech. Computer Science and Engineering (Year III)  
-**Milestone:** Review 1 & Review 2 (Full Regression Track + Full Classification Track Parts A & B)
+**Milestone:** Review 1 & Review 2 (Regression · Classification · Clustering · Web Application · Testing)
 
 ---
 
@@ -24,7 +24,8 @@ Agri-Predict applies machine learning techniques to Indian agricultural data to 
 1. **Crop Yield Prediction (Regression Track):** Estimating crop yield (yield per unit area) using land area, input quantities (fertilizer, pesticide), weather conditions (rainfall, temperature profiles), and agro-climatic context (crop, season, state).
 2. **Crop Recommendation (Classification Track):**
    - **Part A (Review 1):** Five foundational classifiers (Logistic Regression, KNN, Gaussian Naive Bayes, Decision Tree, SVC).
-   - **Part B (Review 2):** Five advanced ensemble & neural classifiers (Random Forest, AdaBoost, Gradient Boosting, Bagging with Decision Tree, MLP Neural Network), followed by a consolidated 10-model benchmark and 5-fold cross-validated hyperparameter tuning.
+   - **Part B (Review 2):** Five advanced ensemble & neural classifiers (Random Forest, AdaBoost, Gradient Boosting, Bagging with Decision Tree, MLP Neural Network), consolidated 10-model benchmark, and 5-fold cross-validated hyperparameter tuning.
+3. **Maize Field Zone Clustering (Unsupervised Track — Review 2):** Discover natural environmental groupings across 10,000 maize-field monitoring records using K-Means and Agglomerative Hierarchical Clustering on 7 soil and climate features, with post-hoc yield validation.
 
 ---
 
@@ -54,6 +55,12 @@ Both raw datasets reside in the `data/` directory and are strictly preserved wit
    - **Rows:** 2,200 records | **Columns:** 8
    - **Target:** `label` (22 crop classes, exactly 100 observations each)
    - **Features:** `N` (Nitrogen), `P` (Phosphorus), `K` (Potassium), `temperature`, `humidity`, `ph`, `rainfall`
+
+3. **`data/clusturing data/train.csv`** *(Clustering Track)*
+   - **Rows:** 10,000 maize-field monitoring records | **Columns:** 9
+   - **Target (post-hoc only):** `yield` (kg/ha) — excluded from clustering fit
+   - **Clustering Features:** `soil_ph`, `organic_matter`, `sand_pct`, `temperature`, `humidity`, `rainfall`, `ndvi`
+   - **Excluded from distance:** `field_id` (categorical identifier, not a measurement)
 
 ---
 
@@ -91,14 +98,42 @@ Both raw datasets reside in the `data/` directory and are strictly preserved wit
 
 ```
 agri-predict/
-├── README.md                          # Project documentation and results
-├── requirements.txt                   # Environment dependencies
+├── README.md                              # Project documentation and results
+├── requirements.txt                       # Notebook environment dependencies
+├── .gitignore
 ├── data/
-│   ├── Crop Yeild Data.csv            # Raw regression dataset (preserved)
-│   └── Crop_recommendation.csv        # Raw classification dataset (preserved)
-└── notebooks/
-    ├── regression.ipynb               # Full Review 1 regression pipeline (18 sections)
-    └── classification.ipynb           # Full Review 1 & Review 2 classification pipeline (25 sections)
+│   ├── Crop Yeild Data.csv                # Raw regression dataset (19,689 rows, preserved)
+│   ├── Crop_recommendation.csv            # Raw classification dataset (2,200 rows, preserved)
+│   └── clusturing data/
+│       ├── train.csv                      # Clustering dataset (10,000 maize fields)
+│       ├── test.csv                       # Clustering test set (2,000 fields)
+│       └── data_description.md            # Feature data dictionary
+├── notebooks/
+│   ├── regression.ipynb                   # Review 1 regression pipeline (18 sections)
+│   ├── classification.ipynb               # Review 1 & 2 classification pipeline (25 sections)
+│   └── clustering.ipynb                   # Review 2 clustering pipeline (14 sections, 49 cells)
+├── models/                                # Serialized model artifacts (.joblib + .json)
+│   ├── regression_pipeline.joblib         # GBR pipeline: scaler + model
+│   ├── regression_metadata.json
+│   ├── classification_pipeline.joblib     # RF pipeline: scaler + model
+│   ├── classification_metadata.json
+│   ├── kmeans_model.joblib                # K-Means k=4 fitted model
+│   ├── agglomerative_model.joblib         # Agglomerative (exploratory, no predict)
+│   ├── clustering_scaler.joblib           # StandardScaler for clustering features
+│   └── clustering_metadata.json          # Cluster profiles, metrics, sizes
+├── app/
+│   ├── backend/
+│   │   ├── app.py                         # Flask REST API (5 endpoints)
+│   │   └── requirements.txt               # Backend dependencies
+│   └── frontend/
+│       ├── index.html                     # Single-page analysis interface
+│       ├── css/styles.css                 # Editorial minimalism design system
+│       └── js/
+│           ├── api.js                     # API client module
+│           ├── validation.js              # Client-side validation
+│           └── app.js                     # UI controller
+└── tests/
+    └── test_backend.py                    # pytest suite (38 tests, all pass)
 ```
 
 ---
@@ -128,8 +163,29 @@ Launch Jupyter Notebook or JupyterLab:
 ```bash
 jupyter notebook notebooks/regression.ipynb
 jupyter notebook notebooks/classification.ipynb
+jupyter notebook notebooks/clustering.ipynb
 ```
-Both notebooks are pre-executed from top to bottom with all cell outputs, metric summaries, confusion matrices, and plots fully visible.
+All three notebooks are pre-executed from top to bottom with all cell outputs, metric summaries, confusion matrices, and plots fully visible.
+
+### 3. Run the Web Application
+```bash
+# Install backend dependencies
+pip install flask flask-cors
+
+# Start the Flask backend (serves frontend statically)
+python app/backend/app.py
+```
+Then open **http://localhost:5000** in your browser. The frontend provides four analysis modes:
+- **Yield Prediction** — Gradient Boosting regression
+- **Crop Recommendation** — Random Forest classification with top-3 probabilities
+- **Field Zone Assignment** — K-Means clustering (k=4) for maize fields
+- **Full Analysis** — All three models simultaneously
+
+### 4. Run Automated Tests
+```bash
+python -m pytest tests/test_backend.py -v --tb=short
+```
+Expected output: **38 passed** in ~2.5s.
 
 ---
 
@@ -191,6 +247,30 @@ We selected the champion **Random Forest Classifier** for systematic hyperparame
 
 **Key Agronomic & Technical Finding:**  
 Restricting tree depth from unbounded growth (`depth=None`) to `depth=12` prevents individual decision paths from memorizing noisy micro-variations while preserving 99.55% test accuracy. Crucially, the cross-validated F1 score improves by **+0.0012**, proving enhanced model generalization and reducing inference memory footprint for precision agriculture deployments.
+
+---
+
+### 4. Clustering Track Results (Review 2 — Unsupervised, k=4)
+
+**Dataset:** `data/clusturing data/train.csv` — 10,000 maize-field records, 7 clustering features.  
+**Cluster count selection:** Elbow method (inertia rate-of-change), Silhouette score, and Davies–Bouldin Index jointly support k=4.
+
+| Algorithm | Silhouette ↑ | Davies–Bouldin ↓ | Calinski–Harabasz ↑ |
+|---|:---:|:---:|:---:|
+| **K-Means (k=4)** | ~0.097 | ~2.17 | ~2204 |
+| **Agglomerative Clustering (Ward, k=4)** | ~0.096 | ~2.19 | ~2188 |
+
+**Note on silhouette scores:** All values are below 0.11, reflecting genuine gradient transitions in environmental conditions across maize fields rather than sharp discrete zones. This is an honest and agronomically expected result for continuous monitoring data.
+
+**Agglomerative limitations:** `scikit-learn` `AgglomerativeClustering` does not support `.predict()` for new observations. It is used as exploratory analysis only. New-field assignment uses K-Means, documented in the backend.
+
+### 5. Automated Test Results
+
+```
+38 passed in 2.53s
+TestHealth (3) · TestMetadata (4) · TestRegression (7) · TestClassification (8)
+TestClustering (9) · TestCompleteAnalysis (6) · TestStaticServing (1)
+```
 
 ---
 

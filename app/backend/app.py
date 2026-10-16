@@ -278,6 +278,7 @@ CLUSTERING_FIELDS = {
 }
 
 @app.route('/api/clustering/assign', methods=['POST'])
+@app.route('/api/clustering/predict', methods=['POST'])
 def clustering_assign():
     err_resp = require_artifact('kmeans_model')
     if err_resp: return err_resp
@@ -304,7 +305,7 @@ def clustering_assign():
 
     feat_order = ['soil_ph', 'organic_matter', 'sand_pct', 'temperature',
                   'humidity', 'rainfall', 'ndvi']
-    X_in = np.array([[values[f] for f in feat_order]])
+    X_in = pd.DataFrame([[values[f] for f in feat_order]], columns=feat_order)
 
     try:
         X_scaled = artifacts['clustering_scaler'].transform(X_in)
@@ -453,7 +454,7 @@ def complete_analysis():
         try:
             feat_order = ['soil_ph', 'organic_matter', 'sand_pct', 'temperature',
                           'humidity', 'rainfall', 'ndvi']
-            X_in = np.array([[clu_values[f] for f in feat_order]])
+            X_in = pd.DataFrame([[clu_values[f] for f in feat_order]], columns=feat_order)
             X_scaled = artifacts['clustering_scaler'].transform(X_in)
             cluster_label = int(artifacts['kmeans_model'].predict(X_scaled)[0])
             meta = artifacts['clustering_metadata']
